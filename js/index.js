@@ -76,41 +76,47 @@
 // };
 
 
-const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 04 20';
-const DESFIRE_SELECT_AID = '00 B0 00 00 00 50';
+const DESFIRE_SELECT_PICC = '00A40004023F0420';
+const DESFIRE_SELECT_AID = '00B000000050';
+
+
 
 async function handleDesfire(nfcEvent) {
     
-    //const tagId = nfc.bytesToHexString(nfcEvent.tag.id);
-    alert('Processing');
+    const tagId = nfc.bytesToHexString(nfcEvent.tag.id);
+    console.log('Processing', tagId);
 
-    
-        nfc.connect('android.nfc.tech.IsoDep', 500);
-        console.log('connected to');
-        alert("connected to");
+    try {
+        await nfc.connect('android.nfc.tech.IsoDep', 500);
+        console.log('connected to', tagId);
         
-        let response = nfc.transceive(DESFIRE_SELECT_PICC);
-       // ensureResponseIs('9000', response);
+        let response = await nfc.transceive(DESFIRE_SELECT_PICC);
+        //ensureResponseIs('9000', response);
         
-        response = nfc.transceive(DESFIRE_SELECT_AID);
+        response = await nfc.transceive(DESFIRE_SELECT_AID);
         //ensureResponseIs('9100', response);
         // 91a0 means the requested application not found
 
+        alert('Selected application AA AA AA');
         alert(response);
-
         // more transcieve commands go here
         
-    
-
-}
-
-function ensureResponseIs(expectedResponse, buffer) {
-    const responseString = util.arrayBufferToHexString(buffer);
-    if (expectedResponse !== responseString) {
-        const error = 'Expecting ' + expectedResponse + ' but received ' + responseString;
-        throw error;
+    } catch (error) {
+        alert(error);
+    } finally {
+        await nfc.close();
+        console.log('closed');
     }
+
 }
+
+// function ensureResponseIs(expectedResponse, buffer) {
+//     const responseString = util.arrayBufferToHexString(buffer);
+//     if (expectedResponse !== responseString) {
+//         const error = 'Expecting ' + expectedResponse + ' but received ' + responseString;
+//         throw error;
+//     }
+// }
 
 function onDeviceReady() {
     nfc.addTagDiscoveredListener(handleDesfire);
