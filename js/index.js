@@ -92,12 +92,12 @@ const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 00 20';
         //let response = await nfc.transceive(DESFIRE_SELECT_PICC);
         //ensureResponseIs('9000', response);
         
-        //response = await nfc.transceive(DESFIRE_SELECT_AID);
+        response =  nfc.transceive(DESFIRE_SELECT_AID);
         //ensureResponseIs('9100', response);
         // 91a0 means the requested application not found
 
-        alert('Selected application AA AA AA');
-        //console.log(response);
+        //alert('Selected application AA AA AA');
+        console.log(response);
         // more transcieve commands go here
         
     } catch (error) {
