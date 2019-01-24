@@ -34,7 +34,11 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
     app.receivedEvent('deviceready');
-
+    nfc.connect(function(){
+    	alert("Connected");
+    },function(){
+    	alert("DisConnected");
+    });
     // Read NDEF formatted NFC Tags
     nfc.addNdefListener (
         function (nfcEvent) {
