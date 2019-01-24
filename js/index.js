@@ -76,9 +76,8 @@
 // };
 
 
-const DESFIRE_SELECT_PICC = '00A40004023F0420';
-const DESFIRE_SELECT_AID = '00B000000050';
-
+const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 00 20';
+//const DESFIRE_SELECT_AID = '00B000000050';
 
 
 async function handleDesfire(nfcEvent) {
@@ -93,13 +92,12 @@ async function handleDesfire(nfcEvent) {
         let response = await nfc.transceive(DESFIRE_SELECT_PICC);
         //ensureResponseIs('9000', response);
         
-        response = await nfc.transceive(DESFIRE_SELECT_AID);
+        //response = await nfc.transceive(DESFIRE_SELECT_AID);
         //ensureResponseIs('9100', response);
         // 91a0 means the requested application not found
 
         alert('Selected application AA AA AA');
-        alert(response);
-        alert('test');
+
         // more transcieve commands go here
         
     } catch (error) {
