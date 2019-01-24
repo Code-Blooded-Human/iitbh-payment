@@ -77,22 +77,22 @@
 
 
 const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 04 20';
-const DESFIRE_SELECT_AID = '00 B0 00 00 00 50'
+const DESFIRE_SELECT_AID = '00 B0 00 00 00 50';
 
 async function handleDesfire(nfcEvent) {
     
     //const tagId = nfc.bytesToHexString(nfcEvent.tag.id);
     alert('Processing');
 
-    try {
-        await nfc.connect('android.nfc.tech.IsoDep', 500);
+    
+        nfc.connect('android.nfc.tech.IsoDep', 500);
         console.log('connected to');
         alert("connected to");
         
-        let response = await nfc.transceive(DESFIRE_SELECT_PICC);
+        let response = nfc.transceive(DESFIRE_SELECT_PICC);
        // ensureResponseIs('9000', response);
         
-        response = await nfc.transceive(DESFIRE_SELECT_AID);
+        response = nfc.transceive(DESFIRE_SELECT_AID);
         //ensureResponseIs('9100', response);
         // 91a0 means the requested application not found
 
@@ -100,12 +100,7 @@ async function handleDesfire(nfcEvent) {
 
         // more transcieve commands go here
         
-    } catch (error) {
-        alert(error);
-    } finally {
-        await nfc.close();
-        console.log('closed');
-    }
+    
 
 }
 
