@@ -12,7 +12,7 @@ function nottest(){
     console.log('Processing', tagId);
 
     try {
-        nfc.connect(test,nottest);
+        nfc.connect(test,test,nottest);
 
         //response =  nfc.transceive(DESFIRE_SELECT_AID);
 
