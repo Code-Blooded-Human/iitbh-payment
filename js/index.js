@@ -103,7 +103,7 @@ async function handleDesfire(nfcEvent) {
     } catch (error) {
         alert(error);
     } finally {
-        await nfc.close();
+        //await nfc.close();
         console.log('closed');
     }
 
