@@ -97,7 +97,7 @@ async function handleDesfire(nfcEvent) {
         // 91a0 means the requested application not found
 
         alert('Selected application AA AA AA');
-
+        console.log(response);
         // more transcieve commands go here
         
     } catch (error) {
