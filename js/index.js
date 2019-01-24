@@ -80,13 +80,13 @@ const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 00 20';
 //const DESFIRE_SELECT_AID = '00B000000050';
 
 
-async function handleDesfire(nfcEvent) {
+ function handleDesfire(nfcEvent) {
     
     const tagId = nfc.bytesToHexString(nfcEvent.tag.id);
     console.log('Processing', tagId);
 
     try {
-        //await nfc.connect(console.log("Successfully connected"), console.log("Disconnected"));
+        nfc.connect();
         //console.log('connected to', tagId);
         
         //let response = await nfc.transceive(DESFIRE_SELECT_PICC);
