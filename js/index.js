@@ -86,8 +86,8 @@ async function handleDesfire(nfcEvent) {
     console.log('Processing', tagId);
 
     try {
-        await nfc.connect(console.log("Successfully connected"), console.log("Disconnected"));
-        console.log('connected to', tagId);
+        //await nfc.connect(console.log("Successfully connected"), console.log("Disconnected"));
+        //console.log('connected to', tagId);
         
         //let response = await nfc.transceive(DESFIRE_SELECT_PICC);
         //ensureResponseIs('9000', response);
@@ -97,7 +97,7 @@ async function handleDesfire(nfcEvent) {
         // 91a0 means the requested application not found
 
         alert('Selected application AA AA AA');
-        console.log(response);
+        //console.log(response);
         // more transcieve commands go here
         
     } catch (error) {
