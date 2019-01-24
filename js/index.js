@@ -99,6 +99,7 @@ async function handleDesfire(nfcEvent) {
 
         alert('Selected application AA AA AA');
         alert(response);
+        alert('test');
         // more transcieve commands go here
         
     } catch (error) {
