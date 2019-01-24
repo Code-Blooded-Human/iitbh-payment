@@ -86,8 +86,8 @@ async function handleDesfire(nfcEvent) {
 
     try {
         await nfc.connect('android.nfc.tech.IsoDep', 500);
-        console.log('connected to', tagId);
-        alert("connected to", tagId);
+        console.log('connected to');
+        alert("connected to");
         
         let response = await nfc.transceive(DESFIRE_SELECT_PICC);
        // ensureResponseIs('9000', response);
