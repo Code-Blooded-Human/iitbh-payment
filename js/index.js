@@ -49,17 +49,10 @@ var app = {
     },
 
     onConnected: function () {
-
-  nfc.transceive(
-    "00A40004023F0020",       // RequestAPDU
-    function (data) { // ResponseAPDU
-      console.log("transceive successful: " + data);
+      console.log("Running");
+      nfc.transceive("00A40004023F0020",function (data) {console.log("transceive successful: " + data);},function (reason) {console.log("transceive failed: " + reason);});
+      nfc.close(app.onConnected,{ app.showTxt('close successful'); },function (reason) { app.showTxt('close failed: ' + reason); });
     },
-    function (reason) {
-      console.log("transceive failed: " + reason);
-    }
-  );
-  },
 
 
 
