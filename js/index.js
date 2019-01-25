@@ -50,12 +50,12 @@ var app = {
 
     onConnected: function () {
       console.log("Running");
-      nfc.transceive("00A40004023F0020",function (data) {console.log("transceive successful: " + data);},function (reason) {console.log("transceive failed: " + reason);});
-      nfc.close(
+      nfc.transceive("00A40004023F0020",function (data) {console.log("transceive successful: " + data); nfc.close(
             app.onConnected, // remove hander
             function ()       { console.log('close successful'); },
             function (reason) { console.log('close failed: ' + reason); }
-          );
+          );},function (reason) {console.log("transceive failed: " + reason);});
+      
     },
 
 
