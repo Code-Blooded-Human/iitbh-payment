@@ -1,49 +1,77 @@
-const DESFIRE_SELECT_PICC = '00 A4 00 04 02 3F 00 20';
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+    app.receivedEvent('deviceready');
+    nfc.addTagDiscoveredListener(app.onNfc,function () { },function (reason) { alert("Ups: " + reason); });
+    },
+    onNfc: function (nfcEvent) {
+      console.log('onNfc');
 
+      var tag = nfcEvent.tag;
 
+      nfc.connect(
+        app.onConnected, // chipcard connected
+        function ()       { console.log('connection successful'); },
+        function (reason) { console.log('connect failed: ' + reason); }
+      );
+    },
 
-function doneok(){
-  console.log("SENT");
-}
-function donenotok(){
-  console.log("NOT SENT");
-}
+    onConnected: function () {
 
-function test(){
-  console.log("Connected");
-  nfc.transceive('00 A4 00 04 02 3F 00 20',doneok,donenotok);
-}
-
-function nottest(){
-  console.log("Not Connected");
-}
- function handleDesfire(nfcEvent) {
-
-    const tagId = nfc.bytesToHexString(nfcEvent.tag.id);
-    console.log('Processing', tagId);
-
-    try {
-        //nfc.connect'',test,nottest);
-      //  nfc.transceive()
-
-        //response =  nfc.transceive(DESFIRE_SELECT_AID);
-
-        //console.log(response);
-
-
-    } catch (error) {
-        alert(error);
-    } finally {
-        nfc.close();
-        console.log('closed');
+  nfc.transceive(
+    "00A40004023F0020",       // RequestAPDU
+    function (data) { // ResponseAPDU
+      console.log("transceive successful: " + data);
+    },
+    function (reason) {
+      console.log("transceive failed: " + reason);
     }
+  );
+  },
 
-}
 
 
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+        var parentElement = document.getElementById(id);
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
 
-function onDeviceReady() {
-    nfc.addTagDiscoveredListener(handleDesfire);
-}
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
 
-document.addEventListener('deviceready', onDeviceReady, false);
+        console.log('Received Event: ' + id);
+    }
+};
